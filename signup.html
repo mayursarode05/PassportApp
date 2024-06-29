@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up Passport</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function HandleClear() {
+            function Clear(){
+                document.getElementById('rdoCpvDelhi').checked = false;
+                document.getElementById('rdoPassportOffice').checked = false;
+                document.getElementById('selectState').value = '';
+                document.getElementById('userName').value = '';
+                document.getElementById('userSurname').value = '';
+                document.getElementById('date').value = '';
+                document.getElementById('userEmail').value = '';
+                document.getElementById('rdoSameEmailLoginY').checked = false;
+                document.getElementById('rdoSameEmailLoginN').checked = false;
+                document.getElementById('loginId').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('selectHint').value = '';
+                document.getElementById('hintAnswere').value = '';
+            }
+            Swal.fire({
+                title: "Are you sure?",
+                text: "All form field will be cleared!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Clear it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Cleared!",
+                        text: "All data has been cleared",
+                        icon: "success"
+                    });
+                    Clear();
+                }
+            }); 
+        }
+      
+        function HandleSubmit(event) {
+            event.preventDefault();
+            let form = document.getElementById('signupForm');
+
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Get form input values
+            let userName = document.getElementById('userName').value;
+            let userSurname = document.getElementById('userSurname').value;
+            let date = document.getElementById('date').value;
+            let userEmail = document.getElementById('userEmail').value;
+            let loginId = document.getElementById('loginId').value;
+            let password = document.getElementById('password').value;
+            let confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate password and confirm password
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    title: "Passwords do not match",
+                    text: "Please ensure the password and confirm password are the same.",
+                    icon: "error"
+                });
+                return;
+            }
+      
+            // Construct formData object
+            let formData = {
+                userName: userName,
+                userSurname: userSurname,
+                date: date,
+                userEmail: userEmail,
+                loginId: loginId,
+                password: password,
+            };
+      
+            // Retrieve existing data from localStorage
+            let existingData = JSON.parse(localStorage.getItem('formData')) || [];
+            
+            // Check if userEmail or loginId already exists
+            let userExists = existingData.some(user => user.loginId === loginId || user.userEmail === userEmail);
+            if (userExists) {
+                Swal.fire({
+                    title: "User already exists",
+                    text: "A user with this Login ID or Email already exists.",
+                    icon: "error"
+                });
+                return;
+            }
+        
+            // Append new formData to existing data
+            existingData.push(formData);
+        
+            // Store updated data back to localStorage
+            localStorage.setItem('formData', JSON.stringify(existingData));
+        
+            Swal.fire({
+                title: "Sign Up Successful",
+                text: "Registration completed successfully!",
+                icon: "success"
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    window.location.href = './Login.html';
+                }
+            });
+        }
+
+        // Initialize Bootstrap validation
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })();
+    </script>
+  </head>
+  <body>
+    
+    <div class="container-fluid">
+        <header>
+            <nav class="navbar navbar-expand-lg bg-dark">
+                <div class="container-fluid">
+                  <a class="navbar-brand text-white" href="./index.html"><h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link active text-white fs-4" aria-current="page" href="./login.html">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active text-white fs-4" aria-current="page" href="./signup.html">Sign Up</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+              <div class="bg-light p-2">
+                <marquee class="bg-light text-dark border border-5 border-info rounded-pill"><strong>Applicants having appointment at PSK Jammu, PSK Ranchi, PSK Bhubaneshwar, PSK R K Puram
+                  ,kindly note there is address change. Please refer to respective RPO page for new address.</strong></marquee>
+              </div>
+        </header>
+
+        <main>
+            <div class="row">
+                <div class="col-lg-6 col-12 m-auto">
+                    <div class="d-flex align-items-center justify-content-center m-auto">
+                        <img src="./img/signup.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <form class="p-5 bg-light needs-validation" id="signupForm" novalidate onsubmit="HandleSubmit(event)">
+                        <div class="mt-5 border shadow p-5">
+                          <h1 class="text-success">Sign Up</h1>
+                          <hr>
+                          <div class="mb-3">
+                            <label for="userName" class="form-label">Given Name (Max 45 Characters)</label>
+                            <input type="text" id="userName" class="form-control" name="fullname" maxlength="45" required>
+                            <div class="invalid-feedback">Please enter your given name.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="userSurname" class="form-label">Surname (Max 45 Characters)</label>
+                            <input type="text" id="userSurname" class="form-control" maxlength="45" name="surname" required>
+                            <div class="invalid-feedback">Please enter your surname.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="date" class="form-label">Date of Birth (DD/MM/YYYY)</label>
+                            <input type="date" id="date" class="form-control" name="" required>
+                            <div class="invalid-feedback">Please enter your date of birth.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="userEmail" class="form-label">E-mail Id (Max 35 Characters)</label>
+                            <input type="email" id="userEmail" class="form-control" maxlength="35" name="email" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="loginId" class="form-label">Login Id (Max 25 Characters)</label>
+                            <input type="text" id="loginId" class="form-control" name="loginId" minlength="6" maxlength="25" required
+                            pattern="^[a-zA-Z0-9]+$" title="Login ID must be at least 6 characters long and contain only letters (a-z, A-Z) and digits (0-9).">
+                            <div class="invalid-feedback">Please enter a valid login ID.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control" name="password" required 
+                            title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, one lowercase letter, and one special character."
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?\:{}|<>]).{8,}$">
+                            <div class="invalid-feedback">Please enter a valid password.</div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control" name="ConfirmPassword" required>
+                            <div class="invalid-feedback">Please confirm your password.</div>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <input type="submit" class="btn btn-success mt-3" value="Register">
+                            <input type="button" value="Clear" onclick="HandleClear()" class="btn btn-warning mt-3">
+                          </div>
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-white text-center py-3">
+            &copy; 2024 <h5 class="text-info">PASSPORT <span class="text-white">SAHAYATA</span></h5>
+          </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
