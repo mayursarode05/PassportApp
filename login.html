@@ -17,7 +17,7 @@
       let password = document.getElementById('userPassword').value;
 
       // Retrieve existing data from localStorage
-      let existingData = JSON.parse(localStorage.getItem('formData')) || [];
+      let existingData = JSON.parse(localStorage.getItem('SignUpData')) || [];
 
       // Check if user exists in the stored data
       let userExists = existingData.some(user => user.loginId === loginId && user.password === password);

@@ -10,20 +10,13 @@
     <script>
         function HandleClear() {
             function Clear(){
-                document.getElementById('rdoCpvDelhi').checked = false;
-                document.getElementById('rdoPassportOffice').checked = false;
-                document.getElementById('selectState').value = '';
                 document.getElementById('userName').value = '';
                 document.getElementById('userSurname').value = '';
                 document.getElementById('date').value = '';
                 document.getElementById('userEmail').value = '';
-                document.getElementById('rdoSameEmailLoginY').checked = false;
-                document.getElementById('rdoSameEmailLoginN').checked = false;
                 document.getElementById('loginId').value = '';
                 document.getElementById('password').value = '';
                 document.getElementById('confirmPassword').value = '';
-                document.getElementById('selectHint').value = '';
-                document.getElementById('hintAnswere').value = '';
             }
             Swal.fire({
                 title: "Are you sure?",
@@ -85,7 +78,7 @@
             };
       
             // Retrieve existing data from localStorage
-            let existingData = JSON.parse(localStorage.getItem('formData')) || [];
+            let existingData = JSON.parse(localStorage.getItem('SignUpData')) || [];
             
             // Check if userEmail or loginId already exists
             let userExists = existingData.some(user => user.loginId === loginId || user.userEmail === userEmail);
@@ -102,7 +95,7 @@
             existingData.push(formData);
         
             // Store updated data back to localStorage
-            localStorage.setItem('formData', JSON.stringify(existingData));
+            localStorage.setItem('SignUpData', JSON.stringify(existingData));
         
             Swal.fire({
                 title: "Sign Up Successful",
@@ -165,8 +158,8 @@
         <main>
             <div class="row">
                 <div class="col-lg-6 col-12 m-auto">
-                    <div class="d-flex align-items-center justify-content-center m-auto">
-                        <img src="./img/signup.jpg" alt="">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="./img/signupp.jpg" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-12">
@@ -175,41 +168,41 @@
                           <h1 class="text-success">Sign Up</h1>
                           <hr>
                           <div class="mb-3">
-                            <label for="userName" class="form-label">Given Name (Max 45 Characters)</label>
-                            <input type="text" id="userName" class="form-control" name="fullname" maxlength="45" required>
+                            <label for="userName" class="form-label">Enter Name</label>
+                            <input type="text" id="userName" class="form-control" name="fullname" maxlength="45" placeholder="Enter name" required title="(Max 45 Characters)">
                             <div class="invalid-feedback">Please enter your given name.</div>
                           </div>
                           <div class="mb-3">
-                            <label for="userSurname" class="form-label">Surname (Max 45 Characters)</label>
-                            <input type="text" id="userSurname" class="form-control" maxlength="45" name="surname" required>
+                            <label for="userSurname" class="form-label">Surname</label>
+                            <input type="text" id="userSurname" class="form-control" maxlength="45" name="surname" placeholder="Enter surname" required title="(Max 45 Characters)">
                             <div class="invalid-feedback">Please enter your surname.</div>
                           </div>
                           <div class="mb-3">
                             <label for="date" class="form-label">Date of Birth (DD/MM/YYYY)</label>
-                            <input type="date" id="date" class="form-control" name="" required>
+                            <input type="date" id="date" class="form-control" name="" placeholder="Enter DOB" required>
                             <div class="invalid-feedback">Please enter your date of birth.</div>
                           </div>
                           <div class="mb-3">
-                            <label for="userEmail" class="form-label">E-mail Id (Max 35 Characters)</label>
-                            <input type="email" id="userEmail" class="form-control" maxlength="35" name="email" required>
+                            <label for="userEmail" class="form-label">E-mail Id</label>
+                            <input type="email" id="userEmail" class="form-control" maxlength="35" placeholder="Enter E-mail" name="email" required title="(Max 35 Characters)">
                             <div class="invalid-feedback">Please enter a valid email address.</div>
                           </div>
                           <div class="mb-3">
-                            <label for="loginId" class="form-label">Login Id (Max 25 Characters)</label>
-                            <input type="text" id="loginId" class="form-control" name="loginId" minlength="6" maxlength="25" required
+                            <label for="loginId" class="form-label">Login Id</label>
+                            <input type="text" id="loginId" class="form-control" name="loginId" placeholder="Enter Login Id" minlength="6" maxlength="25" required
                             pattern="^[a-zA-Z0-9]+$" title="Login ID must be at least 6 characters long and contain only letters (a-z, A-Z) and digits (0-9).">
                             <div class="invalid-feedback">Please enter a valid login ID.</div>
                           </div>
                           <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" class="form-control" name="password" required 
+                            <input type="password" id="password" class="form-control" placeholder="Enter Password" minlength="8" name="password" required 
                             title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, one lowercase letter, and one special character."
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?\:{}|<>]).{8,}$">
                             <div class="invalid-feedback">Please enter a valid password.</div>
                           </div>
                           <div class="mb-3">
                             <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" id="confirmPassword" class="form-control" name="ConfirmPassword" required>
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" minlength="8" name="ConfirmPassword" required>
                             <div class="invalid-feedback">Please confirm your password.</div>
                           </div>
                           <div class="d-flex justify-content-between">

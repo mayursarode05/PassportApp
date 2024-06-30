@@ -60,7 +60,7 @@
                             </div>
                             <div class="mb-3">
                               <label for="cardNumber" class="form-label">Card Number</label>
-                              <input type="text" class="form-control" id="cardNumber" maxlength="16" pattern="\d{16}" required>
+                              <input type="text" class="form-control" id="cardNumber" placeholder="Enter Card Number" maxlength="16" pattern="\d{16}" required>
                               <div class="invalid-feedback">Please enter a valid 16-digit card number.</div>
                             </div>
                             <div class="mb-3">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="mb-3">
                               <label for="cvv" class="form-label">CVV</label>
-                              <input type="text" class="form-control" id="cvv" maxlength="3" pattern="\d{3}" required>
+                              <input type="text" class="form-control" id="cvv" maxlength="3" placeholder="Enter CVV" pattern="\d{3}" required title="Please enter a 3-digit CVV.">
                               <div class="invalid-feedback">Please enter a valid 3-digit CVV.</div>
                             </div>
                             <div class="mb-3">
@@ -111,7 +111,7 @@
                 icon: "success"
             }).then((res) => {
                 if (res.isConfirmed) {
-                    window.location.href = './index.html';
+                    window.location.href = './dashboard.html';
                 }
             });
         }

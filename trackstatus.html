@@ -55,17 +55,14 @@
                               <label for="applicationType" class="form-label">Select Application Type</label>
                               <select class="form-select" id="applicationType" required>
                                   <option value="">-- select --</option>
-                                  <option value="Passport">Passport</option>
-                                  <option value="RTI">RTI</option>
-                                  <option value="Diplomatic">Diplomatic</option>
-                                  <option value="Surrender certificate">Surrender certificate</option>
-                                  <option value="Appeal application">Appeal application</option>
+                                  <option value="Normal Passport">Normal Passport</option>
+                                  <option value="Tatkal Passport">Tatkal Passport</option>
                               </select>
                               <div class="invalid-feedback">Please select an application type.</div>
                             </div>
                             <div class="mb-3">
                               <label for="fileNumber" class="form-label">File Number</label>
-                              <input type="text" class="form-control" id="fileNumber" required>
+                              <input type="text" class="form-control" id="fileNumber" placeholder="Enter File Number" required>
                               <div class="invalid-feedback">Please enter your file number.</div>
                             </div>
                             <div class="mb-3">
@@ -89,44 +86,45 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Function to handle form submission with validation
-        function HandleSubmit(event) {
-            event.preventDefault();
-            let form = document.getElementById('trackForm');
-
-            if (!form.checkValidity()) {
-                event.stopPropagation();
-                form.classList.add('was-validated');
-                return;
-            }
-
-            Swal.fire({
-                title: "Tracking",
-                text: "Your application status is being tracked!",
-                icon: "success"
-            }).then((res) => {
-                if (res.isConfirmed) {
-                    window.location.href = './viewtrackstatus.html';
-                }
-            });
+        let HandleSubmit = () =>{
+          let applicationType = document.getElementById('applicationType').value;
+        let fileNumber = document.getElementById('fileNumber').value;
+        let dob = document.getElementById('dob').value;
+        let trackPassportInfo = {
+          applicationType:applicationType,
+          fileNumber:fileNumber,
+          dob:dob
+        };
+        existingInfo = JSON.parse(localStorage.getItem('trackUserInfo')) || [];
+        existingInfo.push(trackPassportInfo);
+        localStorage.setItem('trackUserInfo',JSON.stringify(existingInfo));
         }
-
-        // Initialize Bootstrap validation
         (function () {
-            'use strict'
-
-            var forms = document.querySelectorAll('.needs-validation')
-
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })();
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              } else {
+                event.preventDefault();
+                Swal.fire({
+                  title: "Tracking",
+                  text: "Your application status is being tracked!",
+                  icon: "success"
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    HandleSubmit();
+                    window.location.href = './viewtrackstatus.html';
+                  }
+                });
+              }
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })();
     </script>
   </body>
 </html>
