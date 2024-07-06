@@ -14,7 +14,7 @@
         <nav class="navbar navbar-expand-lg bg-dark">
           <div class="container-fluid">
             <a class="navbar-brand text-white" href="./dashboard.html">
-              <h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5>
+              <h5 class="text-info">PASSPORT <span class="text-white">SAHAYATA</span></h5>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -22,11 +22,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active text-white fs-4" aria-current="page" href="./dashboard.html">Home</a>
+                  <a class="nav-link active text-white " aria-current="page" href="./dashboard.html">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active text-white fs-4" aria-current="page" href="./index.html">Logout &nbsp; <i class="bi bi-power"></i></a>
-                </li>
+                  <div class="dropdown mt-2">
+                    <a class="fs-4 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-gear"></i>
+                    </a>                            
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li><a class="dropdown-item text-dark" href="#">View Profile</a></li>
+                      <li><a class="dropdown-item text-dark" href="#">View Feedback</a></li>
+                      <li><a class="dropdown-item text-dark" href="./index.html">Sign out &nbsp; <i class="bi bi-power text-danger"></i></a></li>
+                    </ul>
+                  </div>
+            </li>
               </ul>
             </div>
           </div>
@@ -49,14 +58,14 @@
                 <hr>
                 <div class="mb-3">
                   <label for="name" class="form-label">Enter Your Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter Your Name" required>
+                  <input type="text"  pattern="^[a-zA-Z ]*$" title="Only alphabetic characters (A-Z, a-z) and spaces are allowed" class="form-control" id="name" placeholder="Enter Your Name" required>
                   <div class="invalid-feedback">
-                    Please enter your name.
+                    Please enter correct name.
                   </div>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Enter your E-mail</label>
-                  <input type="email" class="form-control" placeholder="Enter Your E-mail" id="email" required>
+                  <input type="email" class="form-control"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="Enter Your E-mail" id="email" required>
                   <div class="invalid-feedback">
                     Please enter a valid email address.
                   </div>
@@ -92,6 +101,45 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        validateName();
+        validateEmail();
+      });
+      let validateName = () =>{
+        const nameInput = document.getElementById('name');
+        const nameValidation = document.getElementById('nameValidation');
+
+        nameInput.addEventListener('input', function () {
+            const nameValue = nameInput.value.trim();
+
+            // Check if the name contains any numeric characters
+            if (/[^\sa-zA-Z]/.test(nameValue)) {
+                nameInput.classList.add('is-invalid');
+                nameValidation.textContent = 'Numeric characters are not allowed in the name.';
+            } else {
+                nameInput.classList.remove('is-invalid');
+                nameValidation.textContent = '';
+            }
+        });
+      }
+      let validateEmail = () =>{
+        const emailInput = document.getElementById('email');
+        const emailValidation = document.getElementById('emailValidation');
+
+        emailInput.addEventListener('input', validateEmail);
+
+        function validateEmail() {
+            const emailValue = emailInput.value.trim();
+            const isValid = isValidEmail(emailValue);
+
+            emailInput.classList.toggle('is-invalid', !isValid);
+            emailValidation.textContent = isValid ? '' : 'Please enter a valid email address.';
+        }
+      }
+      function isValidEmail(email) {
+            // Simplified regular expression for a valid email format
+            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+        }
       (function () {
         'use strict'
         var forms = document.querySelectorAll('.needs-validation')

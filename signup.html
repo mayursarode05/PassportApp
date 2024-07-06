@@ -133,17 +133,17 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand text-white" href="./index.html"><h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
+                  <a class="navbar-brand text-white" href="./index.html"><h5 class="text-info">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                       <li class="nav-item">
-                        <a class="nav-link active text-white fs-4" aria-current="page" href="./login.html">Login</a>
+                        <a class="nav-link active text-white" aria-current="page" href="./login.html">Login</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active text-white fs-4" aria-current="page" href="./signup.html">Sign Up</a>
+                        <a class="nav-link active text-white" aria-current="page" href="./signup.html">Sign Up</a>
                       </li>
                     </ul>
                   </div>
@@ -190,7 +190,7 @@
                           <div class="mb-3">
                             <label for="loginId" class="form-label">Login Id</label>
                             <input type="text" id="loginId" class="form-control" name="loginId" placeholder="Enter Login Id" minlength="6" maxlength="25" required
-                            pattern="^[a-zA-Z0-9]+$" title="Login ID must be at least 6 characters long and contain only letters (a-z, A-Z) and digits (0-9).">
+                            pattern="^[a-zA-Z0-9]{6,}$" title="Login ID must be at least 6 characters long and contain only letters (a-z, A-Z) or digits (0-9).">
                             <div class="invalid-feedback">Please enter a valid login ID.</div>
                           </div>
                           <div class="mb-3">

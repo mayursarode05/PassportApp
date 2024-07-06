@@ -71,7 +71,7 @@
       <nav class="navbar navbar-expand-lg bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="./index.html">
-            <h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5>
+            <h5 class="text-info">PASSPORT <span class="text-white">SAHAYATA</span></h5>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -81,10 +81,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active text-white fs-4" aria-current="page" href="./login.html">Login</a>
+                <a class="nav-link active text-white" aria-current="page" href="./login.html">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active text-white fs-4" aria-current="page" href="./signup.html">Sign Up</a>
+                <a class="nav-link active text-white" aria-current="page" href="./signup.html">Sign Up</a>
               </li>
             </ul>
           </div>
@@ -119,7 +119,8 @@
               </div>
               <div class="mb-3">
                 <label for="userPassword" class="form-label">Password</label>
-                <input type="password" name="password" id="userPassword" class="form-control" placeholder="Enter Password" required>
+                <input type="password" name="password" id="userPassword" class="form-control" placeholder="Enter Password"   title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, one lowercase letter, and one special character."
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?\:{}|<>]).{8,}$" required>
                 <div class="invalid-feedback">Please enter your password.</div>
               </div>
 

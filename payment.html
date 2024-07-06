@@ -10,23 +10,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    
+    <!-- passport numver card holder name -->
     <div class="container-fluid">
         <header>
             <nav class="navbar navbar-expand-lg bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand text-white" href="./dashboard.html"><h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
+                  <a class="navbar-brand text-white" href="./dashboard.html"><h5 class="text-info ">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active text-white fs-4" aria-current="page" href="./dashboard.html">Home</a>
+                            <a class="nav-link active text-white " aria-current="page" href="./dashboard.html">Home</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link active text-white fs-4" aria-current="page" href="./index.html">Logout &nbsp; <i class="bi bi-power"></i></a>
-                        </li>
+                            <div class="dropdown mt-2">
+                              <a class="fs-4 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-gear"></i>
+                              </a>                            
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-dark" href="#">View Profile</a></li>
+                                <li><a class="dropdown-item text-dark" href="#">View Feedback</a></li>
+                                <li><a class="dropdown-item text-dark" href="./index.html">Sign out &nbsp; <i class="bi bi-power text-danger"></i></a></li>
+                              </ul>
+                            </div>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -59,10 +68,26 @@
                               <div class="invalid-feedback">Please select a payment type.</div>
                             </div>
                             <div class="mb-3">
-                              <label for="cardNumber" class="form-label">Card Number</label>
-                              <input type="text" class="form-control" id="cardNumber" placeholder="Enter Card Number" maxlength="16" pattern="\d{16}" required>
-                              <div class="invalid-feedback">Please enter a valid 16-digit card number.</div>
+                              <label for="name" class="form-label">Card Holder Name</label>
+                              <input type="text"  pattern="^[a-zA-Z ]*$" title="Only alphabetic characters (A-Z, a-z) and spaces are allowed" class="form-control" id="name" placeholder="Card Holder Name" required>
+                              <div class="invalid-feedback">
+                                Please enter correct name.
+                              </div>
                             </div>
+                            <div class="mb-3">
+                              <label for="passportNumber" class="form-label">Passport Number</label>
+                              <input type="text" class="form-control" id="passportNumber" name="passportNumber" 
+                                     pattern="[0-9]{10}" minlength="10" maxlength="10" placeholder="Passport Number"
+                                     required title="Please enter a 10-digit numeric Passport Number">
+                              <div class="invalid-feedback">Please enter a valid 10-digit numeric Passport Number.</div>
+                          </div>
+                            <div class="mb-3">
+                              <label for="cardNumber" class="form-label">Card Number</label>
+                              <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234-5678-1234-5678"
+                                     maxlength="19" pattern="\d{4}-\d{4}-\d{4}-\d{4}" required
+                                     title="Please enter a valid card number in the format 1234-5678-1234-5678 (digits 0-9 only)">
+                              <div class="invalid-feedback">Please enter a valid card number in the format 1234-5678-1234-5678.</div>
+                            </div>                                               
                             <div class="mb-3">
                               <label for="expiryDate" class="form-label">Expiry Date</label>
                               <input type="month" class="form-control" id="expiryDate" required>
@@ -70,7 +95,8 @@
                             </div>
                             <div class="mb-3">
                               <label for="cvv" class="form-label">CVV</label>
-                              <input type="text" class="form-control" id="cvv" maxlength="3" placeholder="Enter CVV" pattern="\d{3}" required title="Please enter a 3-digit CVV.">
+                              <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV"
+                              minlength="3" maxlength="3" pattern="[0-9]{3}" required title="Please enter a 3-digit CVV.">
                               <div class="invalid-feedback">Please enter a valid 3-digit CVV.</div>
                             </div>
                             <div class="mb-3">
@@ -94,6 +120,71 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+       document.addEventListener('DOMContentLoaded', function () {
+        validateName();
+        validateCVV();
+        validateCardNumber();
+        validatePassportNumber();
+      });
+      
+      let validateName = () =>{
+        const nameInput = document.getElementById('name');
+        const nameValidation = document.getElementById('nameValidation');
+
+        nameInput.addEventListener('input', function () {
+            const nameValue = nameInput.value.trim();
+
+            // Check if the name contains any numeric characters
+            if (/[^\sa-zA-Z]/.test(nameValue)) {
+                nameInput.classList.add('is-invalid');
+                nameValidation.textContent = 'Numeric characters are not allowed in the name.';
+            } else {
+                nameInput.classList.remove('is-invalid');
+                nameValidation.textContent = '';
+            }
+        });
+      }
+      let validateCVV = () =>{
+        const cvvInput = document.getElementById('cvv');
+
+        cvvInput.addEventListener('input', function () {
+            // Remove non-numeric characters except digits
+            const formattedValue = cvvInput.value.replace(/\D/g, '');
+            // Limit the length to 3 digits
+            cvvInput.value = formattedValue.slice(0, 3);
+        });
+      }
+      let validateCardNumber = () =>{
+        document.getElementById('cardNumber').addEventListener('input', function (e) {
+      const input = e.target;
+      let value = input.value.replace(/\D/g, ''); // Remove all non-digit characters
+      let formattedValue = '';
+
+      for (let i = 0; i < value.length; i += 4) {
+        if (i > 0) formattedValue += '-';
+        formattedValue += value.substr(i, 4);
+      }
+
+      input.value = formattedValue.substr(0, 19); // Ensure max length of 19
+    });
+    document.getElementById('cardNumber').addEventListener('keypress', function (e) {
+      if (!/\d/.test(e.key)) {
+        e.preventDefault(); // Prevent non-digit characters from being entered
+      }
+    });
+  }
+      let validatePassportNumber = () =>{
+        const passportNumberInput = document.getElementById('passportNumber');
+
+        passportNumberInput.addEventListener('input', function () {
+            // Remove any non-numeric characters
+            const formattedValue = passportNumberInput.value.replace(/\D/g, '');
+            // Limit the length to 10 digits
+            passportNumberInput.value = formattedValue.slice(0, 10);
+        });
+      }
+
+    
         // Function to handle form submission with validation
         function HandleSubmit(event) {
             event.preventDefault();

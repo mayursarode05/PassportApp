@@ -15,18 +15,27 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand text-white" href="./dashboard.html"><h5 class="text-info fs-2">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
+                  <a class="navbar-brand text-white" href="./dashboard.html"><h5 class="text-info ">PASSPORT <span class="text-white">SAHAYATA</span></h5></a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                       <li class="nav-item">
-                        <a class="nav-link active text-white fs-4" aria-current="page" href="./dashboard.html">Home</a>
+                        <a class="nav-link active text-white " aria-current="page" href="./dashboard.html">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active text-white fs-4" aria-current="page" href="./index.html">Logout &nbsp; <i class="bi bi-power"></i></a>
-                    </li>
+                        <div class="dropdown mt-2">
+                          <a class="fs-4 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-gear"></i>
+                          </a>                            
+                          <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item text-dark" href="#">View Profile</a></li>
+                            <li><a class="dropdown-item text-dark" href="#">View Feedback</a></li>
+                            <li><a class="dropdown-item text-dark" href="./index.html">Sign out &nbsp; <i class="bi bi-power text-danger"></i></a></li>
+                          </ul>
+                        </div>
+                  </li>
                     </ul>
                   </div>
                 </div>
@@ -49,38 +58,27 @@
                             <h3 class="text-success">Status Tracker</h3>
                             <hr>
                             <div class="mb-3">
-                              <label for="fileNumber" class="form-label">File Number</label>
-                              <input type="text" class="form-control" id="fileNumber" value="HIFPS1408Q" required>
-                              <div class="invalid-feedback">Please enter your file number.</div>
-                            </div>
+                              <label for="passportNumber" class="form-label">Passport Number</label>
+                              <input type="text" class="form-control" disabled id="passportNumber" name="passportNumber">
+                              <div class="invalid-feedback">Please enter a valid 10-digit numeric Passport Number.</div>
                             <div class="mb-3">
-                              <label for="dob" class="form-label">Date of Birth</label>
-                              <input type="date" class="form-control" id="dob" value="1997-09-29" required>
-                              <div class="invalid-feedback">Please enter your date of birth.</div>
-                            </div>
-                            <div class="mb-3">
-                              <label for="givenName" class="form-label">Given Name</label>
-                              <input type="text" class="form-control" id="givenName" value="Mayur Bhagwat" required>
+                              <label for="givenName" class="form-label">Your Name</label>
+                              <input type="text" class="form-control" id="givenName"  disabled required>
                               <div class="invalid-feedback">Please enter your given name.</div>
                             </div>
                             <div class="mb-3">
-                              <label for="surname" class="form-label">Surname</label>
-                              <input type="text" class="form-control" id="surname" value="Sarode" required>
-                              <div class="invalid-feedback">Please enter your surname.</div>
-                            </div>
-                            <div class="mb-3">
                               <label for="applicationType" class="form-label">Type of Application</label>
-                              <input type="text" class="form-control" id="applicationType" value="Normal" required>
+                              <input type="text" disabled class="form-control" id="applicationType" value="Normal" required>
                               <div class="invalid-feedback">Please enter the type of application.</div>
                             </div>
                             <div class="mb-3">
                               <label for="receivedDate" class="form-label">Application Received on Date</label>
-                              <input type="date" class="form-control" id="receivedDate" value="2024-06-10" required>
+                              <input type="date" disabled class="form-control" id="receivedDate" value="2024-06-10" required>
                               <div class="invalid-feedback">Please enter the received date.</div>
                             </div>
                             <div class="mb-3">
                               <label for="status" class="form-label">Status</label>
-                              <textarea class="form-control" id="status" readonly>Passport has been printed and applicant will receive an SMS/email once the passport is dispatched.</textarea>
+                              <textarea class="form-control" disabled id="status" readonly>Passport has been printed and applicant will receive an SMS/email once the passport is dispatched.</textarea>
                             </div>
                             <a href="./dashboard.html" class="btn btn-primary m-3">Close</a>
                         </div>
@@ -96,6 +94,35 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
+     document.addEventListener('DOMContentLoaded', () => {
+    let trlPassportNumber = JSON.parse(localStorage.getItem('trkPassportNumber'));
+    let newPassportApplyData = JSON.parse(localStorage.getItem('NewPassportApplyData'));
+    let reNewPassportApplyData =  JSON.parse(localStorage.getItem('RenewalPsptApplyData'));
+    let isNewPassExist = newPassportApplyData.some(x => x.passportNumber == trlPassportNumber);
+    let isReNewPassExist = reNewPassportApplyData.some(x => x.passportNumber == trlPassportNumber);
+    
+    if(isNewPassExist){
+      newPassportApplyData.some(item => {
+      document.getElementById('passportNumber').value = item.passportNumber;
+        document.getElementById('givenName').value = item.applicantName;
+        document.getElementById('applicationType').value = item.applicationtype;
+    });
+    }
+   if(isReNewPassExist){
+    reNewPassportApplyData.some(item => {
+      document.getElementById('passportNumber').value = item.passportNumber;
+        document.getElementById('givenName').value = item.applicantName;
+        document.getElementById('applicationType').value = item.applicationtype;
+    });
+   }
+
+    
+   
+    trlPassportNumber = null;
+    console.log(trlPassportNumber);
+});
+
+
         // Initialize Bootstrap validation
         (function () {
             'use strict'
