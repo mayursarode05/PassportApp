@@ -125,6 +125,7 @@
         validateCVV();
         validateCardNumber();
         validatePassportNumber();
+        validateDate();
       });
       
       let validateName = () =>{
@@ -183,7 +184,27 @@
             passportNumberInput.value = formattedValue.slice(0, 10);
         });
       }
+      let validateDate = () =>{
+        const expiryDateInput = document.getElementById('expiryDate');
 
+    expiryDateInput.addEventListener('input', function() {
+      if (!expiryDateInput.checkValidity()) {
+        expiryDateInput.classList.add('is-invalid');
+      } else {
+        expiryDateInput.classList.remove('is-invalid');
+      }
+    });
+
+    // Optionally, handle form submission to prevent invalid submissions
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      if (!expiryDateInput.checkValidity()) {
+        event.preventDefault();
+        expiryDateInput.classList.add('is-invalid');
+      }
+    });
+
+      }
     
         // Function to handle form submission with validation
         function HandleSubmit(event) {
